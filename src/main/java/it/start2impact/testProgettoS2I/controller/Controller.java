@@ -1,5 +1,6 @@
 package it.start2impact.testProgettoS2I.controller;
 
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -21,6 +22,11 @@ import it.start2impact.testProgettoS2I.model.Prenotazione;
 import it.start2impact.testProgettoS2I.model.Utente;
 import it.start2impact.testProgettoS2I.service.CsvService;
 import it.start2impact.testProgettoS2I.utils.Utils;
+
+/**
+ * Controller class containing methods called by the main, every method in this
+ * class represents a key feature in the app.
+ */
 
 @Component
 public class Controller {
@@ -123,13 +129,26 @@ public class Controller {
 		System.out.println(nuovoUtente);
 	}
 
-	public void esportaCorsi() throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
+	public void esportaCorsi(Scanner input)
+			throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
 		LocalDate currentDate = LocalDate.now();
-		Writer writer = new FileWriter("src/main/resources/" + currentDate + ".csv");
-		StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer).build();
-		beanToCsv.write(service.getCorsiDisponibili());
-		System.out.println("Stampa CSV avvenuta con successo!");
-		writer.close();
+		System.out.println("Hai selezionato esporta corsi!");
+
+		do {
+			try {
+				Writer writer = new FileWriter(Utils.getPath(input,
+						"Digita di seguito il percorso assoluto in cui vuoi che il file csv venga creato:") + "\\"
+						+ currentDate + ".csv");
+				StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer).build();
+				beanToCsv.write(service.getCorsiDisponibili());
+				System.out.println("Stampa CSV avvenuta con successo!");
+				writer.close();
+				break;
+			} catch (FileNotFoundException e) {
+				System.out.println(
+						"Errore nella creazione del file!\nL'errore può essere dovuto alla mancanza di permessi di scrittura nel percorso designato, riprova!");
+			}
+		} while (true);
 	}
 
 }

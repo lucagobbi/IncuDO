@@ -17,6 +17,14 @@ import it.start2impact.testProgettoS2I.model.Corso;
 import it.start2impact.testProgettoS2I.model.Prenotazione;
 import it.start2impact.testProgettoS2I.model.Utente;
 
+/**
+ * 
+ * Service class to handle the in-memory data for the app: during the
+ * initialization this class reads the csv files collecting all data courses,
+ * users and reservations.
+ *
+ */
+
 @Service
 public class CsvService {
 

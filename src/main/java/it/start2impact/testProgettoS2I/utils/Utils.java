@@ -1,5 +1,6 @@
 package it.start2impact.testProgettoS2I.utils;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,6 +8,12 @@ import java.util.Scanner;
 
 import it.start2impact.testProgettoS2I.exception.NumberOutOfRangeException;
 import it.start2impact.testProgettoS2I.service.CsvService;
+
+/**
+ * Utilities for managing simple tasks like receiving a number or a string from
+ * input. Every method has a while loop till the input inserted passes all the
+ * controls.
+ */
 
 public class Utils {
 
@@ -88,5 +95,21 @@ public class Utils {
 		service.getUtenti().forEach(System.out::println);
 		Integer idUtenteSelezionato = Utils.getNum(input, 1, service.getUtenti().size());
 		return idUtenteSelezionato;
+	}
+
+	public static String getPath(Scanner input, String label) {
+		do {
+			String path = getString(input, label);
+			try {
+				File folder = new File(path);
+				if (folder.exists()) {
+					return path;
+				} else {
+					System.out.println("Il percorso non esiste!");
+				}
+			} catch (Exception e) {
+				System.out.println("Errore nella digitazione del percorso!");
+			}
+		} while (true);
 	}
 }

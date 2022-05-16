@@ -57,8 +57,9 @@ public class TestProgettoS2IApplication {
 						break;
 					case 4:
 						controller.aggiungiUtente(input);
+						break;
 					case 5:
-						controller.esportaCorsi();
+						controller.esportaCorsi(input);
 						break;
 					default:
 						break;
